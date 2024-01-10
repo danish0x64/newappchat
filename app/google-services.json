@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "434920716658",
+    "project_id": "angel-hearts",
+    "storage_bucket": "angel-hearts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434920716658:android:d58534f3da9f47d1ca85eb",
+        "android_client_info": {
+          "package_name": "com.danezah.angelhearts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434920716658-3pmt8do15e8vqsualr0guv61m08bn7c3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.danezah.angelhearts",
+            "certificate_hash": "4fa5c731c38340c6856e0344d514d82e40b5397e"
+          }
+        },
+        {
+          "client_id": "434920716658-opifs50ne8h4ul05lf6kv5gfqj28fe9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqg79z3bq4P_rZ3zzHD5qm7b2vfrSFCoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "434920716658-opifs50ne8h4ul05lf6kv5gfqj28fe9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
