@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.danezah.angelhearts.adapter.RecentChatRecyclerAdapter;
 import com.danezah.angelhearts.adapter.SearchUserRecyclerAdapter;
+import com.danezah.angelhearts.adapter.UserRecyclerAdapter;
 import com.danezah.angelhearts.model.ChatroomModel;
 import com.danezah.angelhearts.model.UserModel;
 import com.danezah.angelhearts.utils.FirebaseUtil;
@@ -21,7 +22,7 @@ import com.google.firebase.firestore.Query;
 public class ChatFragment extends Fragment {
 
     RecyclerView recyclerView;
-    RecentChatRecyclerAdapter adapter;
+    UserRecyclerAdapter adapter;
 
 
     public ChatFragment() {
@@ -36,16 +37,14 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
-    void setupRecyclerView(){
+    private void setupRecyclerView() {
+        // Assuming you have a "users" collection and UserModel class
+        Query query = FirebaseUtil.allUserCollectionReference().orderBy("username");
 
-        Query query = FirebaseUtil.allChatroomCollectionReference()
-                .whereArrayContains("userIds",FirebaseUtil.currentUserId())
-                .orderBy("lastMessageTimestamp",Query.Direction.DESCENDING);
-
-        FirestoreRecyclerOptions<ChatroomModel> options = new FirestoreRecyclerOptions.Builder<ChatroomModel>()
-                .setQuery(query,ChatroomModel.class).build();
-
-        adapter = new RecentChatRecyclerAdapter(options,getContext());
+        FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()
+                .setQuery(query, UserModel.class)
+                .build();
+        adapter = new UserRecyclerAdapter(options,getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         adapter.startListening();

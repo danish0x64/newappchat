@@ -9,7 +9,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FirebaseUtil {
 
@@ -24,9 +26,24 @@ public class FirebaseUtil {
         return false;
     }
 
-    public static DocumentReference currentUserDetails(){
-        return FirebaseFirestore.getInstance().collection("users").document(currentUserId());
+    // Inside FirebaseUtil class
+    public static DocumentReference currentUserDetails() {
+        String userId = currentUserId();
+        if (userId != null) {
+            DocumentReference userRef = FirebaseFirestore.getInstance().collection("users").document(userId);
+            userRef.get().addOnCompleteListener(task -> {
+                if (!task.getResult().exists()) {
+                    // Create a new document with the role field
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put("role", "Default"); // Set a default role if needed
+                    userRef.set(userData);
+                }
+            });
+            return userRef;
+        }
+        return null;
     }
+
 
     public static CollectionReference allUserCollectionReference(){
         return FirebaseFirestore.getInstance().collection("users");
