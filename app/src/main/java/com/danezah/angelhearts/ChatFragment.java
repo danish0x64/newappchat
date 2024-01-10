@@ -19,6 +19,9 @@ import com.danezah.angelhearts.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ChatFragment extends Fragment {
 
     RecyclerView recyclerView;
@@ -39,8 +42,9 @@ public class ChatFragment extends Fragment {
 
     private void setupRecyclerView() {
         // Assuming you have a "users" collection and UserModel class
-        String specificUserId = "danish";
-        Query query = FirebaseUtil.allUserCollectionReference().whereEqualTo("username", specificUserId);;
+        List<String> specificUserIds = Arrays.asList("+918169821604", "user2_id", "user3_id");
+
+        Query query = FirebaseUtil.allUserCollectionReference().whereIn("phone", specificUserIds);
 
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()
                 .setQuery(query, UserModel.class)
