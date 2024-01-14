@@ -102,7 +102,25 @@
             />
 
     </LinearLayout>
+    <RadioGroup
+        android:id="@+id/user_type_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <RadioButton
+            android:id="@+id/radio_angel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Angel"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radio_seeker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seeker" />
+    </RadioGroup>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"

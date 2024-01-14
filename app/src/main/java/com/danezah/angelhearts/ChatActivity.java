@@ -120,25 +120,25 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    void sendMessageToUser(String message){
-
+    void sendMessageToUser(String message) {
         chatroomModel.setLastMessageTimestamp(Timestamp.now());
         chatroomModel.setLastMessageSenderId(FirebaseUtil.currentUserId());
         chatroomModel.setLastMessage(message);
-        FirebaseUtil.getChatroomReference(chatroomId).set(chatroomModel);
+        FirebaseUtil.getChatroomReference(chatroomId).set(chatroomModel); // Update the chatroom model
 
-        ChatMessageModel chatMessageModel = new ChatMessageModel(message,FirebaseUtil.currentUserId(),Timestamp.now());
+        ChatMessageModel chatMessageModel = new ChatMessageModel(message, FirebaseUtil.currentUserId(), Timestamp.now());
         FirebaseUtil.getChatroomMessageReference(chatroomId).add(chatMessageModel)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             messageInput.setText("");
                             sendNotification(message);
                         }
                     }
                 });
     }
+
 
     void getOrCreateChatroomModel(){
         FirebaseUtil.getChatroomReference(chatroomId).get().addOnCompleteListener(task -> {

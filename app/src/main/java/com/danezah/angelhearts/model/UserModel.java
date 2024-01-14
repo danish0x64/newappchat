@@ -3,28 +3,30 @@ package com.danezah.angelhearts.model;
 import com.google.firebase.Timestamp;
 
 public class UserModel {
-    private String phone;
+    private String email;
     private String username;
     private Timestamp createdTimestamp;
     private String userId;
     private String fcmToken;
+    private String role; // Added field for user's role
 
     public UserModel() {
     }
 
-    public UserModel(String phone, String username, Timestamp createdTimestamp,String userId) {
-        this.phone = phone;
+    public UserModel(String email, String username, Timestamp createdTimestamp, String userId, String role) {
+        this.email = email;
         this.username = username;
         this.createdTimestamp = createdTimestamp;
         this.userId = userId;
+        this.role = role;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -57,5 +59,13 @@ public class UserModel {
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

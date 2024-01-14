@@ -1,6 +1,5 @@
 package com.danezah.angelhearts;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,9 +9,6 @@ import android.os.Handler;
 import com.danezah.angelhearts.model.UserModel;
 import com.danezah.angelhearts.utils.AndroidUtil;
 import com.danezah.angelhearts.utils.FirebaseUtil;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -49,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                     if(FirebaseUtil.isLoggedIn()){
                         startActivity(new Intent(SplashActivity.this,MainActivity.class));
                     }else{
-                        startActivity(new Intent(SplashActivity.this,LoginPhoneNumberActivity.class));
+                        startActivity(new Intent(SplashActivity.this, LoginGoogleNumberActivity.class));
                     }
                     finish();
                 }

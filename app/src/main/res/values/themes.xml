@@ -2,16 +2,16 @@
     <!-- Base application theme. -->
     <style name="Theme.EasyChat" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/my_primary</item>
-        <item name="colorPrimaryVariant">@color/my_primary</item>
+        <item name="colorPrimary">#3498db</item> <!-- Blue color -->
+        <item name="colorPrimaryVariant">#2980b9</item> <!-- Darker blue variant -->
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/my_secondary</item>
-        <item name="colorSecondaryVariant">@color/my_secondary</item>
+        <item name="colorSecondary">#27ae60</item> <!-- Green color -->
+        <item name="colorSecondaryVariant">#2ecc71</item> <!-- Darker green variant -->
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/off_white</item>
+        <item name="android:windowBackground">@color/light_gray</item>
     </style>
 </resources>

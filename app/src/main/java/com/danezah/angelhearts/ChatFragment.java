@@ -42,9 +42,9 @@ public class ChatFragment extends Fragment {
 
     private void setupRecyclerView() {
         // Assuming you have a "users" collection and UserModel class
-        List<String> specificUserIds = Arrays.asList("+918169821604", "user2_id", "user3_id");
+        List<String> specificUserIds = Arrays.asList("zaph.solution@gmail.com", "user2_id", "user3_id");
 
-        Query query = FirebaseUtil.allUserCollectionReference().whereIn("phone", specificUserIds);
+        Query query = FirebaseUtil.allUserCollectionReference().whereIn("email", specificUserIds);
 
         FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>()
                 .setQuery(query, UserModel.class)
