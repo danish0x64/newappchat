@@ -61,9 +61,8 @@ public class ChatFragment extends Fragment {
                                 if ("Angel".equals(currentRole)) {
                                     // If the current user is a "seeker," query all "angel" users
                                     // Assuming userIds is a list of user IDs
-                                    query = FirebaseUtil.allChatroomCollectionReference()
-                                            .whereArrayContains("userIds", FirebaseUtil.currentUserId())
-                                            .orderBy("lastMessageTimestamp", Query.Direction.DESCENDING);
+                                    query = FirebaseUtil.allUserCollectionReference().whereEqualTo("role", "Seeker");
+
 
                                 } else {
                                     // If the current user is an "angel," modify the query based on your specific condition
