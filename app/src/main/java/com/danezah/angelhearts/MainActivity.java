@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     ChatFragment chatFragment;
     ProfileFragment profileFragment;
+    MoreFragment moreFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
         chatFragment = new ChatFragment();
         profileFragment = new ProfileFragment();
+        moreFragment = new MoreFragment();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        searchButton = findViewById(R.id.main_search_btn);
 
-        searchButton.setOnClickListener((v)->{
-            startActivity(new Intent(MainActivity.this,SearchUserActivity.class));
-        });
+
+
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(item.getItemId()==R.id.menu_profile){
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_frame_layout,profileFragment).commit();
+                }
+                if(item.getItemId()==R.id.more){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_frame_layout,moreFragment).commit();
                 }
                 return true;
             }

@@ -1,10 +1,12 @@
 package com.danezah.angelhearts.utils;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -52,6 +54,9 @@ public class FirebaseUtil {
     public static DocumentReference getChatroomReference(String chatroomId){
         return FirebaseFirestore.getInstance().collection("chatrooms").document(chatroomId);
     }
+    public static CollectionReference chatroomsCollectionReference() {
+        return FirebaseFirestore.getInstance().collection("chatrooms");
+    }
 
     public static CollectionReference getChatroomMessageReference(String chatroomId){
         return getChatroomReference(chatroomId).collection("chats");
@@ -95,8 +100,8 @@ public class FirebaseUtil {
                 .child(otherUserId);
     }
 
-
 }
+
 
 
 

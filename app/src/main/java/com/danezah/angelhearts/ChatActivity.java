@@ -23,6 +23,9 @@ import com.danezah.angelhearts.utils.FirebaseUtil;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.common.collect.ImmutableList;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,9 +34,11 @@ import com.google.firebase.firestore.Query;
 import org.checkerframework.checker.units.qual.C;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -190,28 +195,51 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     void callApi(JSONObject jsonObject){
-         MediaType JSON = MediaType.get("application/json; charset=utf-8");
-         OkHttpClient client = new OkHttpClient();
-        String url = "https://fcm.googleapis.com/fcm/send";
-        RequestBody body = RequestBody.create(jsonObject.toString(),JSON);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .header("Authorization","Bearer YOUR_API_KEY")
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+        try {
+            // Step 1: Obtain Access Token
+            String accessToken = getAccessToken();
 
-            }
+            // Step 2: Make FCM Request
+            MediaType JSON = MediaType.get("application/json; charset=utf-8");
+            OkHttpClient client = new OkHttpClient();
+            String url = "https://fcm.googleapis.com/v1/projects/your-firebase-project-id/messages:send"; // Replace with your Firebase project ID
+            RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .header("Authorization", "Bearer " + accessToken)
+                    .build();
 
-            }
-        });
+            // Step 3: Enqueue the request
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    // Handle failure
+                }
 
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    // Handle response
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    // Step 4: Method to obtain Access Token
+    String getAccessToken() throws IOException {
+        String path = "angel-hearts-firebase-adminsdk-6klll-b57847520d.json"; // Replace with the path to your service account key JSON file
+        List<String> scopes = ImmutableList.of("https://www.googleapis.com/auth/firebase.messaging");
+
+        GoogleCredentials credentials = ServiceAccountCredentials
+                .fromStream(new FileInputStream(path))
+                .createScoped(scopes);
+
+        return credentials.refreshAccessToken().getTokenValue();
+    }
+
 
 
 

@@ -23,7 +23,7 @@ public class UserListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_chat);
 
-        recyclerView = findViewById(R.id.recyler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         setupRecyclerView();
     }
 
@@ -35,7 +35,9 @@ public class UserListActivity extends AppCompatActivity {
                 .setQuery(query, UserModel.class)
                 .build();
 
-        adapter = new UserRecyclerAdapter(options, this);
+        // Pass the current user's ID to the adapter
+        String currentUserId = FirebaseUtil.currentUserId();
+        adapter = new UserRecyclerAdapter(options, this, currentUserId);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

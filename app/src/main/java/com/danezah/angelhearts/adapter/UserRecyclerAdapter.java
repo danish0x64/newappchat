@@ -26,10 +26,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel, UserRecyclerAdapter.UserViewHolder> {
 
     private Context context;
+    private String currentUserId;
 
-    public UserRecyclerAdapter(@NonNull FirestoreRecyclerOptions<UserModel> options, Context context) {
+    public UserRecyclerAdapter(@NonNull FirestoreRecyclerOptions<UserModel> options, Context context, String currentUserId) {
         super(options);
         this.context = context;
+        this.currentUserId = currentUserId;
     }
 
     @Override
@@ -44,6 +46,9 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel, Use
 
         holder.usernameText.setText(model.getUsername());
 
+        // Fetch and display the lastMessage from the chatrooms
+        fetchLastMessage(currentUserId, model.getUserId(), holder);
+
         holder.itemView.setOnClickListener(v -> {
             // Navigate to user profile or chat activity
             Intent intent = new Intent(context, ChatActivity.class); // Adjust accordingly
@@ -51,6 +56,28 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel, Use
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });
+    }
+
+    private void fetchLastMessage(String currentUserId, String otherUserId, UserViewHolder holder) {
+        // Fetch the lastMessage from the chatrooms collection in Firebase
+        FirebaseUtil.chatroomsCollectionReference()
+                .document(getChatroomId(currentUserId, otherUserId))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        if (documentSnapshot.exists()) {
+                            String lastMessage = documentSnapshot.getString("lastMessage");
+                            // Display the lastMessage in your ViewHolder
+                            holder.setLastMessage(lastMessage);
+                        }
+                    }
+                });
+    }
+
+    private String getChatroomId(String userId1, String userId2) {
+        // Create a unique chatroomId based on the two user IDs
+        return userId1.compareTo(userId2) < 0 ? userId1 + "_" + userId2 : userId2 + "_" + userId1;
     }
 
     @NonNull
@@ -63,11 +90,18 @@ public class UserRecyclerAdapter extends FirestoreRecyclerAdapter<UserModel, Use
     static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView usernameText;
         ImageView profilePic;
+        TextView lastMessageText; // Add this line
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             usernameText = itemView.findViewById(R.id.user_name_text);
             profilePic = itemView.findViewById(R.id.profile_pic_image_view);
+            lastMessageText = itemView.findViewById(R.id.last_message_text); // Initialize this with the appropriate ID
+        }
+
+        // Add this method to set the last message
+        public void setLastMessage(String lastMessage) {
+            lastMessageText.setText(lastMessage);
         }
     }
 }

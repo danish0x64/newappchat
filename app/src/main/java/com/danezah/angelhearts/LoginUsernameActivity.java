@@ -106,10 +106,10 @@ public class LoginUsernameActivity extends AppCompatActivity {
     private String getUserType() {
         int selectedRadioButtonId = userTypeRadioGroup.getCheckedRadioButtonId();
 
-        if (selectedRadioButtonId == R.id.radio_angel) {
-            return "Angel";
-        } else if (selectedRadioButtonId == R.id.radio_seeker) {
+        if (selectedRadioButtonId == R.id.radio_seeker) {
             return "Seeker";
+        } else if (selectedRadioButtonId == R.id.radio_angel) {
+            return "Angel";
         }
         // Default to a value or handle the case where no radio button is selected
         return "Seeker";
